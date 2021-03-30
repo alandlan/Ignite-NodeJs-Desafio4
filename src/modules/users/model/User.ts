@@ -3,10 +3,12 @@ import { v4 as uuidV4 } from "uuid";
 class User {
 
   constructor(){
-    if(!this.id){
+    if(this.id === undefined || !this.id){
       this.id = uuidV4();
     }
     this.admin = false;
+    this.created_at = new Date();
+    this.updated_at = new Date();
   }
 
   id?: string;
