@@ -26,7 +26,7 @@ class ListAllUsersController {
       
     } catch (error) {
 
-      return response.status(400).json({error: "Mensagem de erro"})
+      return response.status(400).json({error: "Não foi possível listar todos os usuários"})
       
     }
     
