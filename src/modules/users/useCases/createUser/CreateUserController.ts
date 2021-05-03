@@ -16,7 +16,7 @@ class CreateUserController {
       
     } catch (error) {
 
-      return response.status(400).json({error: "Não foi possível criar um usuário"});
+      return response.status(400).json({error: "This email is already in use"});
 
     }    
   }

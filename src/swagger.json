@@ -1,0 +1,117 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Atlas",
+        "description": "Essa é a documentação sobre o Atlas API",
+        "version": "1.0.0",
+        "contact": {
+            "email": "alan4lann@gmail.com"
+        }
+    },
+    "paths":{
+        "/users":{
+            "post":{
+                "tags": ["Users"],
+                "summary": "Cria um novo usuário",
+                "requestBody":{
+                    "required": true,
+                    "description": "Campos obrigatórios para criação de um usuário.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email":{
+                                        "type":"string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "category name sample",
+                                    "description": "category description sample"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201":{
+                        "description": "Operação realizada com sucesso.",
+                        "content":{
+                            "application/json":{
+                                "schema": {
+                                    "type": "object",
+                                    "properties":{
+                                        "admin": {
+                                            "type": "boolean"
+                                        },
+                                        "id":{
+                                            "type": "string",
+                                            "format": "uuid"
+                                        },
+                                        "name":{
+                                            "type": "string",
+                                            "example": "RocketSeat"
+                                        },
+                                        "email":{
+                                            "type": "string",
+                                            "format": "email",
+                                            "example": "oi@rocketseat.com.br"
+                                        },
+                                        "created_at": {
+                                            "type": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "type": "date-time"
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Email já está sendo utilizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": "This email is already in use."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get":{
+                "tags": ["Users"],
+                "summary": "List a User",
+                "description": "List a exists User",
+                "parameters": [
+                    {
+                      "name": "user_id",
+                      "in": "header",
+                      "description": "ID of User",
+                      "required": true,
+                      "type": "uuid",
+                      "format": "v4"
+                    }
+                ],
+                "responses": {
+                    "201":{
+                        "description": "Created"
+                    },
+                    "500":{
+                        "description": "User already exists"
+                    }
+                }
+            }
+
+        }
+    }
+
+}
