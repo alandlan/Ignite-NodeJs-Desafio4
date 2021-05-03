@@ -61,10 +61,12 @@
                                             "example": "oi@rocketseat.com.br"
                                         },
                                         "created_at": {
-                                            "type": "date-time"
+                                            "type": "string",
+                                            "format": "date-time"
                                         },
                                         "updated_at": {
-                                            "type": "date-time"
+                                            "type": "string",
+                                            "format": "date-time"
                                         }
                                         
                                     }
@@ -79,6 +81,10 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },"example": {
                                         "error": "This email is already in use."
                                     }
                                 }
@@ -89,24 +95,89 @@
             },
             "get":{
                 "tags": ["Users"],
-                "summary": "List a User",
-                "description": "List a exists User",
+                "summary": "Retornar todos os usuários.",
+                "description": "Somente o usuário admin pode acessar",
                 "parameters": [
                     {
                       "name": "user_id",
-                      "in": "header",
-                      "description": "ID of User",
                       "required": true,
-                      "type": "uuid",
-                      "format": "v4"
+                      "schema":{
+                          "type": "string",
+                          "format": "uuid"
+                      },
+                      "in": "header"
                     }
                 ],
                 "responses": {
                     "201":{
-                        "description": "Created"
+                        "description": "Operação realizada com sucesso.",
+                        "content":{
+                            "application/json":{
+                                "schema": {
+                                    "type": "object",
+                                    "properties":{
+                                        "admin": {
+                                            "type": "boolean"
+                                        },
+                                        "id":{
+                                            "type": "string",
+                                            "format": "uuid"
+                                        },
+                                        "name":{
+                                            "type": "string",
+                                            "example": "RocketSeat"
+                                        },
+                                        "email":{
+                                            "type": "string",
+                                            "format": "email",
+                                            "example": "oi@rocketseat.com.br"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                        
+                                    },"example": [
+                                        {
+                                            "admin": true,
+                                            "id": "bbfd0f84-dd78-4e63-bf5a-6ce4d9e5f8d6",
+                                            "name": "Alan",
+                                            "email": "teste@teste.com.br",
+                                            "created_at": "2021-05-03T14:23:34.286Z",
+                                            "updated_at": "2021-05-03T14:23:34.286Z"
+                                        },{
+                                            "admin": false,
+                                            "id": "7a16f7c2-187e-487d-b9ec-ba8a5ecd3371",
+                                            "name": "RocketSeat",
+                                            "email": "teste@rocketseat.com.br",
+                                            "created_at": "d2021-05-03T14:23:34.286Z",
+                                            "updated_at": "2021-05-03T14:23:34.286Z"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
                     },
-                    "500":{
-                        "description": "User already exists"
+                    "400":{
+                        "description": "Usuário sem permissão ou Usuário não encontrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },"example": {
+                                        "error": "You need to be an administrator to list all users."
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
